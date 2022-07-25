@@ -8,7 +8,7 @@ const CardItemContainer = () => {
 
 	useEffect(() => {
 		getData();
-	}, []);
+	}, [data]);
 
 	const getData = async () => {
 		const posts = await getPosts();

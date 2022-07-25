@@ -2,11 +2,11 @@ import Favorite from '@mui/icons-material/Favorite';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ShareIcon from '@mui/icons-material/Share';
-import { Avatar, Button, Card, CardActions, CardContent, CardHeader, IconButton, Typography } from '@mui/material';
+import { Avatar, Card, CardActions, CardContent, CardHeader, IconButton, Typography } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import React from 'react';
-import { Link } from 'react-router-dom';
-const Item = ({ id, title, description, date }) => {
+
+const CardItemDetail = ({ title, description, date }) => {
 	return (
 		<>
 			<Card>
@@ -37,13 +37,10 @@ const Item = ({ id, title, description, date }) => {
 					<IconButton aria-label="share">
 						<ShareIcon />
 					</IconButton>
-					<Button>
-						<Link to={'/post/' + id}>Detalle</Link>
-					</Button>
 				</CardActions>
 			</Card>
 		</>
 	);
 };
 
-export default Item;
+export default CardItemDetail;

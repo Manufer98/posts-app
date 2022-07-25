@@ -1,7 +1,10 @@
 import { Box, Stack } from "@mui/material";
 import { initializeApp } from "firebase/app";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Add from "./components/Feed/Add";
+import CardItemDetailContainer from "./components/Feed/CardItemDetailContainer";
 import Feed from "./components/Feed/Feed";
+import Hola from "./components/Feed/Hola";
 import Navbar from "./components/Navbar";
 import Rightbar from "./components/Rightbar";
 import Sidebar from "./components/Sidebar/Sidebar";
@@ -29,14 +32,19 @@ initializeApp(firebaseConfig);
 function App() {
   return (
     <Box >
-      <Navbar />
-      <Stack direction="row" spacing={2} justifyContent="space-between">
-        <Sidebar />
-        <Feed />
-        <Rightbar />
-      </Stack>
-      <Add />
-
+      <BrowserRouter>
+        <Navbar />
+        <Stack direction="row" spacing={2} justifyContent="space-between">
+          <Sidebar />
+          <Routes>
+            <Route path="/" element={<Feed />} />
+            <Route path="/sdd" element={<Hola/>} />
+            <Route path="/post/:id" element={<CardItemDetailContainer/>} />
+          </Routes>
+          <Rightbar />
+        </Stack>
+        <Add />
+      </BrowserRouter>
     </Box>
   );
 }
