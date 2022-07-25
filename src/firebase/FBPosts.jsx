@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs, getFirestore } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, getDocs, getFirestore, Timestamp } from 'firebase/firestore';
 
 const coleccion = 'posts';
 
@@ -13,6 +13,13 @@ export const getPosts = async () => {
 	//console.log(posts[0].date.toDate().toDateString());
 	return posts;
 };
+export const getPost = async (id) => {
+	const db = getFirestore();
+	const colleccionProductos = doc(db, coleccion, id);
+	const res = await getDoc(colleccionProductos);
+	const post = { id: res.id, ...res.data() };
+	return post;
+};
 
 export const addPost = (title, description) => {
 	const db = getFirestore();
@@ -20,9 +27,10 @@ export const addPost = (title, description) => {
 	const post = {
 		title: title,
 		description: description,
-		/* date: Date.now(), */
+		date: Timestamp.fromDate(new Date()),
 		/* date:Date.now() */
 	};
+
 	addDoc(orderCollection, post)
 		.then(({ id }) => {
 			console.log(id);
