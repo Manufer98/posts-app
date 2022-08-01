@@ -11,17 +11,17 @@ import Sidebar from "./components/Sidebar/Sidebar";
 
 const firebaseConfig = {
 
-  apiKey: "AIzaSyDwCzS32IgZxB7Lr12JGLYuQGDB7V-qzLo",
+  apiKey: "AIzaSyApmlNO6WIc97MHSYOX-1a-srMXMp_YoVw",
 
-  authDomain: "material-95553.firebaseapp.com",
+  authDomain: "material-4734f.firebaseapp.com",
 
-  projectId: "material-95553",
+  projectId: "material-4734f",
 
-  storageBucket: "material-95553.appspot.com",
+  storageBucket: "material-4734f.appspot.com",
 
-  messagingSenderId: "508516321926",
+  messagingSenderId: "221534931671",
 
-  appId: "1:508516321926:web:7aa362d16c7507c3259f07"
+  appId: "1:221534931671:web:4445f2363b3c838984fe92"
 
 };
 

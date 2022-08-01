@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, getDoc, getDocs, getFirestore, Timestamp } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, Timestamp } from 'firebase/firestore';
 
 const coleccion = 'posts';
 
@@ -6,11 +6,7 @@ export const getPosts = async () => {
 	const db = getFirestore();
 	const colleccionProductos = collection(db, coleccion);
 	const res = await getDocs(colleccionProductos);
-
-	//console.log(res.docs.map((i) => i.data()));
 	const posts = res.docs.map((item) => ({ id: item.id, ...item.data() }));
-	//dateCreated.toDate().toDateString();
-	//console.log(posts[0].date.toDate().toDateString());
 	return posts;
 };
 export const getPost = async (id) => {
@@ -28,7 +24,6 @@ export const addPost = (title, description) => {
 		title: title,
 		description: description,
 		date: Timestamp.fromDate(new Date()),
-		/* date:Date.now() */
 	};
 
 	addDoc(orderCollection, post)
@@ -36,4 +31,18 @@ export const addPost = (title, description) => {
 			console.log(id);
 		})
 		.catch(() => console.log('aaa'));
+};
+
+export const deletePost = (id) => {
+	console.log(id);
+	const db = getFirestore();
+	const docRef = doc(db, coleccion, id);
+
+	deleteDoc(docRef)
+		.then(() => {
+			console.log('Entire Document has been deleted successfully.');
+		})
+		.catch((error) => {
+			console.log(error);
+		});
 };
