@@ -5,8 +5,22 @@ import ShareIcon from '@mui/icons-material/Share';
 import { Avatar, Card, CardActions, CardContent, CardHeader, IconButton, Typography } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { deletePost } from '../../firebase/FBPosts';
 
-const CardItemDetail = ({ title, description, date }) => {
+const CardItemDetail = ({ id, title, description, date }) => {
+	let navigate = useNavigate();
+
+	const deleteP = (id) => {
+		try {
+			deletePost(id);
+
+			navigate('/');
+		} catch (e) {
+			console.log('aca', e, id);
+		}
+	};
+
 	return (
 		<>
 			<Card>
@@ -37,6 +51,7 @@ const CardItemDetail = ({ title, description, date }) => {
 					<IconButton aria-label="share">
 						<ShareIcon />
 					</IconButton>
+					<button onClick={() => deleteP(id)}>Delete</button>
 				</CardActions>
 			</Card>
 		</>
