@@ -21,7 +21,7 @@ const Sidebar = () => {
 					<Item title="Marketplace" icon={<StoreIcon />} to="" />
 					<Item title="Friends" icon={<PersonIcon />} to="" />
 					<Item title="Settings" icon={<SettingsIcon />} to="settings" />
-					<Item title="Profile" icon={<AccountBoxIcon />} to="" />
+					<Item title="Profile" icon={<AccountBoxIcon />} to="profile" />
 					<Item title={name} to="" />
 					<ListItem disablePadding>
 						<ListItemButton component="a" href="#home">
