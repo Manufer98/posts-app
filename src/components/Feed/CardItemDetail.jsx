@@ -5,17 +5,20 @@ import ShareIcon from '@mui/icons-material/Share';
 import { Avatar, Card, CardActions, CardContent, CardHeader, IconButton, Typography } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import React from 'react';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { deletePost } from '../../firebase/FBPosts';
 
 const CardItemDetail = ({ id, title, description, date }) => {
 	let navigate = useNavigate();
+	const notify = () => toast.success('Post deleted', { duration: 4000 });
 
 	const deleteP = (id) => {
 		try {
 			deletePost(id);
 
 			navigate('/');
+			notify();
 		} catch (e) {
 			console.log('aca', e, id);
 		}

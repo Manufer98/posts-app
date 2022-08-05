@@ -1,5 +1,6 @@
 import { Box, Stack } from "@mui/material";
 import { initializeApp } from "firebase/app";
+import { Toaster } from 'react-hot-toast';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Add from "./components/Feed/Add";
 import CardItemDetailContainer from "./components/Feed/CardItemDetailContainer";
@@ -7,6 +8,7 @@ import Feed from "./components/Feed/Feed";
 import Hola from "./components/Feed/Hola";
 import Navbar from "./components/Navbar";
 import Rightbar from "./components/Rightbar";
+import Settings from "./components/Settings/Settings";
 import Sidebar from "./components/Sidebar/Sidebar";
 
 const firebaseConfig = {
@@ -37,10 +39,12 @@ function App() {
     <Box >
       <BrowserRouter>
         <Navbar />
+        <Toaster />
         <Stack direction="row" spacing={2} justifyContent="space-between">
           <Sidebar />
           <Routes>
             <Route path="/" element={<Feed />} />
+            <Route path="/settings" element={<Settings />} />
             <Route path="/sdd" element={<Hola/>} />
             <Route path="/post/:id" element={<CardItemDetailContainer/>} />
           </Routes>
