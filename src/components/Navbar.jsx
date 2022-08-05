@@ -3,6 +3,7 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import SignpostIcon from '@mui/icons-material/Signpost';
 import { AppBar, Avatar, Badge, Box, InputBase, Menu, MenuItem, styled, Toolbar, Typography } from '@mui/material';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 const StyledToolbar = styled(Toolbar)({
 	display: 'flex',
 	justifyContent: 'space-between',
@@ -34,6 +35,7 @@ const UserBox = styled(Box)(({ theme }) => ({
 }));
 
 const Navbar = () => {
+	const name = useSelector((state) => state.user.name);
 	const [open, setOpen] = useState(false);
 	return (
 		<AppBar position="sticky">
@@ -41,6 +43,10 @@ const Navbar = () => {
 				<Typography variant="h6" sx={{ display: { xs: 'none', sm: 'block' } }}>
 					Posts App
 				</Typography>
+				<Typography variant="h6" sx={{ display: { xs: 'none', sm: 'block' } }}>
+					{name}
+				</Typography>
+
 				<SignpostIcon sx={{ display: { xs: 'block', sm: 'none' } }} />
 				<Search>
 					<InputBase placeholder="search..." />
@@ -57,7 +63,7 @@ const Navbar = () => {
 				</Icons>
 				<UserBox onClick={() => setOpen(true)}>
 					<Avatar sx={{ width: 30, height: 30 }} />
-					<Typography>John</Typography>
+					<Typography>{name}</Typography>
 				</UserBox>
 			</StyledToolbar>
 			<Menu

@@ -1,7 +1,8 @@
 import { Add as AddIcon } from '@mui/icons-material';
 import { Box, Button, Fab, Modal, styled, TextField, Tooltip, Typography } from '@mui/material';
-
 import { useState } from 'react';
+import toast from 'react-hot-toast';
+
 import { addPost } from '../../firebase/FBPosts';
 
 const StyledModal = styled(Modal)({
@@ -15,9 +16,12 @@ const Add = () => {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 
+	const notify = () => toast.success('Post created');
+
 	const AddPost = () => {
 		addPost(title, description);
 		setOpen(false);
+		notify();
 	};
 
 	return (
