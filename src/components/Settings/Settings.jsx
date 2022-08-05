@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { GetName } from '../Login/UserData';
 import { update } from '../redux/userSlice';
 
 const Settings = () => {
@@ -19,7 +20,7 @@ const Settings = () => {
 			<Box sx={{ display: 'flex', flexDirection: 'column' }}>
 				<h3>Update your acount</h3>
 				<label>Username</label>
-				<input placeholder={user.name} type="text" onChange={(e) => setName(e.target.value)} />
+				<input placeholder={GetName()} type="text" onChange={(e) => setName(e.target.value)} />
 				<label>Email</label>
 				<input placeholder={user.email} type="text" onChange={(e) => setEmail(e.target.value)} />
 				<button onClick={handleUpdate}>Update</button>
