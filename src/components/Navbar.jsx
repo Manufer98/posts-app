@@ -4,6 +4,7 @@ import SignpostIcon from '@mui/icons-material/Signpost';
 import { AppBar, Avatar, Badge, Box, InputBase, Menu, MenuItem, styled, Toolbar, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { LogoutButton } from '../components/Login/Logout';
 const StyledToolbar = styled(Toolbar)({
 	display: 'flex',
@@ -94,8 +95,21 @@ const Navbar = () => {
 					horizontal: 'right',
 				}}
 			>
-				<MenuItem>Profile</MenuItem>
-				<MenuItem>My account</MenuItem>
+				<MenuItem>
+					<Link style={{ textDecoration: 'none' }} to={'/'}>
+						Homepage
+					</Link>
+				</MenuItem>
+				<MenuItem>
+					<Link style={{ textDecoration: 'none' }} to={'/myposts'}>
+						My Posts
+					</Link>
+				</MenuItem>
+				<MenuItem>
+					<Link style={{ textDecoration: 'none' }} to={'/profile'}>
+						Profile
+					</Link>
+				</MenuItem>
 				<LogoutButton />
 			</Menu>
 		</AppBar>

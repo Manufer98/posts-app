@@ -28,7 +28,7 @@ const CardItemDetailContainer = () => {
 	console.log(post);
 
 	return (
-		<Box bgcolor="pink" flex={4} p={2}>
+		<Box bgcolor="" flex={4} p={2}>
 			<CardItemDetail key={post.id} id={id} date={post.date} title={post.title} description={post.description} email={post.email} />
 		</Box>
 	);
