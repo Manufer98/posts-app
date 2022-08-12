@@ -2,7 +2,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Box, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAllPosts } from '../../firebase/FBPosts';
+import { addUser, getAllPosts } from '../../firebase/FBPosts';
 import HomepageItem from './HomepageItem';
 const Homepage = () => {
 	const [users, setUser] = useState([]);
@@ -10,6 +10,7 @@ const Homepage = () => {
 	const [load, setLoad] = useState(true);
 	const [error, setError] = useState(false);
 	let navigate = useNavigate();
+	addUser();
 	useEffect(() => {
 		getData();
 	}, []);
