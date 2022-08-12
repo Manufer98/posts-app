@@ -1,31 +1,31 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import Favorite from '@mui/icons-material/Favorite';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ShareIcon from '@mui/icons-material/Share';
-import { Avatar, Card, CardActions, CardContent, CardHeader, IconButton, Typography } from '@mui/material';
+import { Avatar, Box, Card, CardActions, CardContent, CardHeader, IconButton, Typography } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import React from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { deletePost } from '../../firebase/FBPosts';
 
-const CardItemDetail = ({ id, title, description, date }) => {
+const CardItemDetail = ({ id, title, description, date, email }) => {
 	let navigate = useNavigate();
-	const notify = () => toast.success('Post deleted', { duration: 4000 });
+	const { user } = useAuth0();
 
-	const deleteP = (id) => {
+	const handleDelete = (id, email) => {
 		try {
-			deletePost(id);
-
+			deletePost(id, email);
 			navigate('/');
-			notify();
+			toast.success('Post deleted', { duration: 4000 });
 		} catch (e) {
 			console.log('aca', e, id);
 		}
 	};
 
 	return (
-		<>
+		<Box>
 			<Card>
 				<CardHeader
 					avatar={
@@ -38,7 +38,7 @@ const CardItemDetail = ({ id, title, description, date }) => {
 							<MoreVertIcon />
 						</IconButton>
 					}
-					title={title}
+					title={email}
 					subheader={date && date.toDate().toDateString()}
 				/>
 				{/* {<CardMedia component="img" height="600" image="https://i.pinimg.com/736x/d1/15/de/d115dec75f9cf5435339547a09a56b24.jpg" alt="Paella dish" />} */}
@@ -54,10 +54,9 @@ const CardItemDetail = ({ id, title, description, date }) => {
 					<IconButton aria-label="share">
 						<ShareIcon />
 					</IconButton>
-					<button onClick={() => deleteP(id)}>Delete</button>
 				</CardActions>
 			</Card>
-		</>
+		</Box>
 	);
 };
 

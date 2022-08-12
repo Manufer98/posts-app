@@ -16,13 +16,13 @@ const Sidebar = () => {
 			<Box position="sticky">
 				<List>
 					<Item title="Homepage" icon={<HomeIcon />} to="" />
-					<Item title="Pages" icon={<TextSnippetIcon />} to="" />
-					<Item title="Groups" icon={<GroupIcon />} to="" />
-					<Item title="Marketplace" icon={<StoreIcon />} to="" />
-					<Item title="Friends" icon={<PersonIcon />} to="" />
-					<Item title="Settings" icon={<SettingsIcon />} to="settings" />
+					<Item title="My Posts" icon={<TextSnippetIcon />} to="myposts" />
+					<Item title="Groups" icon={<GroupIcon />} to="notfound" />
+					<Item title="Marketplace" icon={<StoreIcon />} to="notfound" />
+					<Item title="Users" icon={<PersonIcon />} to="notfound" />
+					<Item title="Settings" icon={<SettingsIcon />} to="notfound" />
 					<Item title="Profile" icon={<AccountBoxIcon />} to="profile" />
-					<Item title={name} to="" />
+					<Item title={name} to="notfound" />
 					<ListItem disablePadding>
 						<ListItemButton component="a" href="#home">
 							<ListItemIcon>

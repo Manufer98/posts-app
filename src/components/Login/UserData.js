@@ -5,7 +5,7 @@ export const GetName = () => {
 	const { user,isAuthenticated} = useAuth0();
 	return(
 	isAuthenticated ? 
-	 user.name : ""
+	 user.given_name : ""
 	
 	)
 
@@ -16,6 +16,17 @@ export const GetEmail = () => {
 	return(
 	isAuthenticated ? 
 	 user.email : ""
+	
+	)
+
+};
+
+export const GetUser = () => {
+	
+	const { user,isAuthenticated} = useAuth0();
+	return(
+	isAuthenticated ? 
+	 user : {}
 	
 	)
 

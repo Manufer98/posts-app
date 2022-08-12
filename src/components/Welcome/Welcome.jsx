@@ -15,15 +15,6 @@ const Welcome = () => {
 			<div className="right">
 				<LoginButton />
 			</div>
-			{/* <header>
-				<h1>Post Social App </h1>
-			</header>
-			<div className="container">
-				<div className="welcome">
-					<h1>Welcome</h1>
-					<LoginButton />
-				</div>
-			</div> */}
 		</div>
 	);
 };

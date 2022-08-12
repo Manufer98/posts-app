@@ -8,15 +8,16 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Add from "./components/Feed/Add";
 import CardItemDetailContainer from "./components/Feed/CardItemDetailContainer";
 import Feed from "./components/Feed/Feed";
-import Hola from "./components/Feed/Hola";
-
+import Homepage from './components/Feed/Homepage';
+import NotFound from './components/Feed/NotFound';
 import { GetEmail, GetName } from './components/Login/UserData';
 import Navbar from "./components/Navbar";
 import Profile from "./components/Profile/Profile";
 import { update } from './components/redux/userSlice';
-import Rightbar from "./components/Rightbar";
+import Rightbar from "./components/Rightbar/Rightbar";
 import Settings from "./components/Settings/Settings";
 import Sidebar from "./components/Sidebar/Sidebar";
+import Users from './components/Users/Users';
 import Welcome from './components/Welcome/Welcome';
 const firebaseConfig = {
 
@@ -42,9 +43,9 @@ initializeApp(firebaseConfig);
 
 
 function App() {
-  const {isAuthenticated,isLoading,user} = useAuth0();
+  const {isAuthenticated,isLoading} = useAuth0();
   const dispatch = useDispatch();
-  const name=GetName().split(" ")[0]; 
+  const name=GetName(); 
   const email= GetEmail();
 
 
@@ -72,13 +73,16 @@ function App() {
         <Navbar />
        
         <Toaster />
-        <Stack direction="row" spacing={2} justifyContent="space-between">
+        <Stack bgcolor='#f5edf1' minHeight="93.2vh" direction="row"  justifyContent="space-between">
           <Sidebar />
           <Routes>
-            <Route path="/" element={<Feed />} />
+          {/*   <Route path="/users" element={<Users />} /> */}
+            <Route path="/users/:id" element={<Users />} />
+            <Route path="/myposts" element={<Feed />} />
+            <Route path="/notfound" element={<NotFound />} /> 
+            <Route path="/" element={<Homepage />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/profile" element={<Profile/>} />
-            <Route path="/sdd" element={<Hola/>} />
             <Route path="/post/:id" element={<CardItemDetailContainer/>} />
           </Routes>
           <Rightbar />

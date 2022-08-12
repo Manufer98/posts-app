@@ -16,7 +16,7 @@ const Settings = () => {
 	};
 
 	return (
-		<Box bgcolor="pink" flex={4} p={2} sx={{ minHeight: '89.65vh' }}>
+		<Box bgcolor="" flex={4} p={2} sx={{ minHeight: '89.65vh' }}>
 			<Box sx={{ display: 'flex', flexDirection: 'column' }}>
 				<h3>Update your acount</h3>
 				<label>Username</label>

@@ -1,3 +1,4 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import Favorite from '@mui/icons-material/Favorite';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -5,15 +6,20 @@ import ShareIcon from '@mui/icons-material/Share';
 import { Avatar, Button, Card, CardActions, CardContent, CardHeader, IconButton, Typography } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import React from 'react';
+import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
-const Item = ({ id, title, description, date }) => {
+import { deletePost } from '../../firebase/FBPosts';
+const Item = ({ id, title, description, date, email }) => {
+	const { user } = useAuth0();
+	const initial = title.split('')[0].toUpperCase();
+
 	return (
 		<>
 			<Card>
 				<CardHeader
 					avatar={
 						<Avatar sx={{ bgcolor: 'red' }} aria-label="recipe">
-							R
+							{initial}
 						</Avatar>
 					}
 					action={
@@ -38,8 +44,22 @@ const Item = ({ id, title, description, date }) => {
 						<ShareIcon />
 					</IconButton>
 					<Button>
-						<Link to={'/post/' + id}>Detalle</Link>
+						<Link style={{ textDecoration: 'none' }} to={'/post/' + email + '~' + id}>
+							Detalle
+						</Link>
 					</Button>
+					{title === user.email ? (
+						<Button
+							onClick={() => {
+								deletePost(id, user.email);
+								toast.success('Post deleted');
+							}}
+						>
+							Delete
+						</Button>
+					) : (
+						''
+					)}
 				</CardActions>
 			</Card>
 		</>
