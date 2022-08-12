@@ -8,7 +8,7 @@ import { LogoutButton } from '../components/Login/Logout';
 const StyledToolbar = styled(Toolbar)({
 	display: 'flex',
 	justifyContent: 'space-between',
-	backgroundColor: 'red',
+	backgroundColor: '#e64588',
 });
 const Search = styled('div')(({ theme }) => ({
 	backgroundColor: 'white',
@@ -51,10 +51,26 @@ const Navbar = () => {
 				</Search>
 
 				<Icons>
-					<Badge badgeContent={4} color="primary">
+					<Badge
+						sx={{
+							'& .MuiBadge-badge': {
+								backgroundColor: '#fa6400',
+							},
+						}}
+						badgeContent={4}
+						color="primary"
+					>
 						<MailIcon />
 					</Badge>
-					<Badge badgeContent={5} color="primary">
+					<Badge
+						sx={{
+							'& .MuiBadge-badge': {
+								backgroundColor: '#fa6400',
+							},
+						}}
+						badgeContent={5}
+						color="primary"
+					>
 						<NotificationsNoneIcon />
 					</Badge>
 					<Avatar onClick={() => setOpen(true)} sx={{ width: 30, height: 30 }} />
