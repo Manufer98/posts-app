@@ -7,24 +7,18 @@ export const getPosts = async (email) => {
 	const db = getFirestore();
 	const usersCollection = doc(db, 'users', id);
 	const res = await getDoc(usersCollection);
-	const user = { ...res.data() };
-
-	return user.posts;
+	const { posts } = { ...res.data() };
+	return posts;
 };
 
 export const getPost = async (idd, email) => {
 	const id = await getId(email);
-
 	//Saco la al usuario con los posts
 	const db = getFirestore();
 	const usersCollection = doc(db, 'users', id);
-
 	const res = await getDoc(usersCollection);
 	const user = { ...res.data() };
-
-	//console.log(user);
 	const post = user.posts.filter((i) => i.id === idd);
-	console.log(post);
 	return post.reduce((acc, cur, i) => (acc = cur), {});
 };
 
@@ -63,9 +57,7 @@ export const addUser = async () => {
 		picture,
 		posts,
 	};
-
 	const fil = users.filter((i) => i === email);
-
 	if (fil.length === 1) {
 		console.log('el mail existe en la bd:', fil);
 	} else {
@@ -97,7 +89,6 @@ export const getUsersData = async () => {
 };
 
 export const getUserData = async (id) => {
-	console.log(id);
 	const db = getFirestore();
 	const usersCollection = doc(db, 'users', id);
 	const res = await getDoc(usersCollection);
@@ -121,8 +112,8 @@ export const getAllPosts = async (email) => {
 
 export const getNames = async (email) => {
 	const users = await getUsersData();
-	const names = users.map((user) => ({ id: user.id, name: user.name, email: user.email }));
-	return names.filter((user) => user.email !== email);
+	const usersData = users.map((user) => ({ id: user.id, name: user.name, email: user.email, picture: user.picture, posts: user.posts }));
+	return usersData.filter((user) => user.email !== email);
 };
 
 export const addPost = async (title, description, email) => {

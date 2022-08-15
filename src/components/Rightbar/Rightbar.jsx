@@ -25,7 +25,13 @@ const Rightbar = () => {
 					Active Users
 				</Typography>
 				<StepConnector />
-				<Box position="sticky">
+				<Box
+					sx={
+						{
+							/* display: 'flex', flexDirection: 'column', flexWrap: 'wrap'  */
+						}
+					}
+				>
 					{users &&
 						users.map((user) => {
 							return <Item key={user.id} id={user.id} email={user.email} />;

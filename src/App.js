@@ -11,13 +11,14 @@ import Feed from "./components/Feed/Feed";
 import Homepage from './components/Feed/Homepage';
 import NotFound from './components/Feed/NotFound';
 import { GetEmail, GetName } from './components/Login/UserData';
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
 import { update } from './components/redux/userSlice';
 import Rightbar from "./components/Rightbar/Rightbar";
 import Settings from "./components/Settings/Settings";
 import Sidebar from "./components/Sidebar/Sidebar";
-import Users from './components/Users/Users';
+import UserDetail from './components/Users/UserDetail';
+import UsersContainer from './components/Users/UsersContainer';
 import Welcome from './components/Welcome/Welcome';
 const firebaseConfig = {
 
@@ -77,10 +78,11 @@ function App() {
           <Sidebar />
           <Routes>
           {/*   <Route path="/users" element={<Users />} /> */}
-            <Route path="/users/:id" element={<Users />} />
+            <Route path="/user/:id" element={<UserDetail />} />
             <Route path="/myposts" element={<Feed />} />
             <Route path="/notfound" element={<NotFound />} /> 
             <Route path="/" element={<Homepage />} />
+            <Route path="/users" element={<UsersContainer />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/profile" element={<Profile/>} />
             <Route path="/post/:id" element={<CardItemDetailContainer/>} />

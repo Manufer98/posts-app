@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { addUser, getAllPosts } from '../../firebase/FBPosts';
 import HomepageItem from './HomepageItem';
 const Homepage = () => {
-	const [users, setUser] = useState([]);
+	const [posts, setPosts] = useState([]);
 	const { user } = useAuth0();
 	const [load, setLoad] = useState(true);
 	const [error, setError] = useState(false);
@@ -17,9 +17,8 @@ const Homepage = () => {
 
 	const getData = async () => {
 		try {
-			const users = await getAllPosts(user.email);
-			setUser(users);
-
+			const posts = await getAllPosts(user.email);
+			setPosts(posts);
 			setLoad(false);
 		} catch (e) {
 			console.log('error', e);
@@ -46,7 +45,7 @@ const Homepage = () => {
 
 			{error && <Typography sx={{ textAlign: 'center', fontSize: '40px', marginTop: '20px' }}>Error... Try again next time</Typography>}
 			<div className={load ? 'loading' : ''}></div>
-			{users.length !== 0 || error || load ? <HomepageItem data={users} /> : <Typography sx={{ textAlign: 'center', fontSize: '30px' }}>No posts</Typography>}
+			{posts.length !== 0 || error || load ? <HomepageItem posts={posts} /> : <Typography sx={{ textAlign: 'center', fontSize: '30px' }}>No posts</Typography>}
 		</Box>
 	);
 };

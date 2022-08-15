@@ -5,7 +5,7 @@ const Item = ({ title, icon, to }) => {
 	let navigate = useNavigate();
 	return (
 		<ListItem disablePadding>
-			<ListItemButton /* component="a" href="#home" */ onClick={() => navigate(`/${to}`)}>
+			<ListItemButton onClick={() => navigate(`/${to}`)}>
 				<ListItemIcon>{icon}</ListItemIcon>
 				<ListItemText primary={title} />
 			</ListItemButton>

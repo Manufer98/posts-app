@@ -1,14 +1,11 @@
-import { useAuth0 } from '@auth0/auth0-react';
 import { Box } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getPost } from '../../firebase/FBPosts';
 import CardItemDetail from './CardItemDetail';
 const CardItemDetailContainer = () => {
 	const { id } = useParams();
-	const { user } = useAuth0();
 	const [post, setPost] = useState({});
-	let navigate = useNavigate();
 	const email = id.split('~')[0];
 	const idUser = id.split('~')[1];
 	console.log(idUser, id);

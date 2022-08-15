@@ -3,10 +3,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Item = ({ email, id }) => {
+	const nickName = email.split('@')[0];
 	return (
-		<Box>
-			<Link to={'/users/' + id} variant="h5">
-				{email}
+		<Box sx={{ bgcolor: 'pink' }}>
+			<Link style={{}} to={'/user/' + id}>
+				{nickName}
 			</Link>
 		</Box>
 	);
