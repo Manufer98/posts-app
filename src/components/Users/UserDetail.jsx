@@ -32,7 +32,7 @@ const Users = () => {
 				</Typography>
 				<img referrerPolicy="no-referrer" src={user.picture} />
 				<Box sx={{ display: 'flex', gap: '10px', flexDirection: 'column' }}>
-					<CardItem data={user.posts} />
+					<CardItem posts={user.posts} />
 				</Box>
 			</Box>
 		</Box>

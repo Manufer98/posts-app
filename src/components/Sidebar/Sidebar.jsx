@@ -12,14 +12,14 @@ import Item from './Item';
 const Sidebar = () => {
 	const name = useSelector((state) => state.user.name);
 	return (
-		<Box flex={1} p={2} sx={{ display: { xs: 'none', sm: 'block' } }}>
+		<Box flex={1} p={2} sx={{ display: { xs: 'none', md: 'block' } }}>
 			<Box position="sticky">
 				<List>
 					<Item title="Homepage" icon={<HomeIcon />} to="" />
 					<Item title="My Posts" icon={<TextSnippetIcon />} to="myposts" />
 					<Item title="Groups" icon={<GroupIcon />} to="notfound" />
 					<Item title="Marketplace" icon={<StoreIcon />} to="notfound" />
-					<Item title="Users" icon={<PersonIcon />} to="notfound" />
+					<Item title="Users" icon={<PersonIcon />} to="users" />
 					<Item title="Settings" icon={<SettingsIcon />} to="notfound" />
 					<Item title="Profile" icon={<AccountBoxIcon />} to="profile" />
 					<Item title={name} to="notfound" />

@@ -5,7 +5,7 @@ import { AppBar, Avatar, Badge, Box, InputBase, Menu, MenuItem, styled, Toolbar,
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { LogoutButton } from '../components/Login/Logout';
+import { LogoutButton } from '../Login/Logout';
 const StyledToolbar = styled(Toolbar)({
 	display: 'flex',
 	justifyContent: 'space-between',

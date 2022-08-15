@@ -14,7 +14,6 @@ const StyledModal = styled(Modal)({
 
 const Add = () => {
 	const [open, setOpen] = useState(false);
-	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const { user } = useAuth0();
 
