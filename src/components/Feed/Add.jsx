@@ -18,15 +18,15 @@ const Add = () => {
 	const { user } = useAuth0();
 
 	const AddPost = () => {
-		addPost(user.name, description, user.email);
+		addPost(user.name, description, user.email, user.picture);
 		setOpen(false);
 		toast.success('Post created');
 	};
 
 	return (
 		<>
-			<Tooltip onClick={() => setOpen(true)} title="Add" sx={{ bgcolor: '#fa6400', position: 'fixed', bottom: 20, left: { xs: 'calc(50% - 25px)', sm: 30 } }}>
-				<Fab color="success" aria-label="add">
+			<Tooltip onClick={() => setOpen(true)} title="Add" sx={{ bgcolor: 'primary ', position: 'fixed', bottom: 20, left: { xs: 'calc(50% - 25px)', sm: 30 } }}>
+				<Fab color="info" aria-label="add">
 					<AddIcon />
 				</Fab>
 			</Tooltip>
@@ -43,12 +43,19 @@ const Add = () => {
 						<TextField value={description} onChange={(e) => setDescription(e.target.value)} multiline rows={5} />
 					</Box>
 					<Button
-						sx={{ width: '100%', bgcolor: '#fa6400', borderRadius: '6px' }}
+						sx={{
+							width: '100%',
+							bgcolor: '#0c5eed',
+							borderRadius: '6px',
+							'&:hover': {
+								background: '#0755de',
+							},
+						}}
 						onClick={() => {
 							AddPost();
 						}}
 					>
-						<Typography color="#2e2f2f">Create</Typography>
+						<Typography color="white">Create</Typography>
 					</Button>
 				</Box>
 			</StyledModal>

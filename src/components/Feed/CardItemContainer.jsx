@@ -7,6 +7,7 @@ import './CardItemContainer.css';
 
 const CardItemContainer = () => {
 	const [posts, setPosts] = useState([]);
+	const [picture, setPicture] = useState([]);
 	const [load, setLoad] = useState(true);
 	const [error, setError] = useState(false);
 
@@ -18,7 +19,8 @@ const CardItemContainer = () => {
 	const getData = async () => {
 		try {
 			const posts = await getPosts(user.email);
-			setPosts(posts);
+			setPosts(posts.posts);
+			setPicture(posts.picture);
 			setLoad(false);
 		} catch (e) {
 			setError(true);
@@ -34,7 +36,7 @@ const CardItemContainer = () => {
 			{/* <StepConnector /> */}
 			{error && <Typography sx={{ textAlign: 'center', fontSize: '40px', marginTop: '20px' }}>Error... Try again next time</Typography>}
 			<div className={load ? 'loading' : ''}></div>
-			{posts.length !== 0 || error || load ? <CardItem posts={posts} /> : <Typography sx={{ textAlign: 'center', fontSize: '30px' }}>No posts</Typography>}
+			{posts.length !== 0 || error || load ? <CardItem posts={posts} picture={picture} /> : <Typography sx={{ textAlign: 'center', fontSize: '30px' }}>No posts</Typography>}
 		</Box>
 	);
 };

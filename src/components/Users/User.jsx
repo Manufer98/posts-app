@@ -10,7 +10,7 @@ const User = ({ name, numberPost, email, id, picture }) => {
 			<Card sx={{ bgcolor: '#E6E3E3' }} onClick={() => navigate('/user/' + id)}>
 				<CardHeader
 					avatar={
-						<Avatar sx={{ bgcolor: 'red' }} aria-label="recipe">
+						<Avatar src={picture} sx={{ bgcolor: 'red' }} aria-label="recipe">
 							{initial}
 						</Avatar>
 					}

@@ -7,8 +7,14 @@ export const getPosts = async (email) => {
 	const db = getFirestore();
 	const usersCollection = doc(db, 'users', id);
 	const res = await getDoc(usersCollection);
+
 	const { posts } = { ...res.data() };
-	return posts;
+	const { picture } = { ...res.data() };
+
+	const ps = { posts, picture };
+
+	//console.log(ps);
+	return ps;
 };
 
 export const getPost = async (idd, email) => {
@@ -59,7 +65,7 @@ export const addUser = async () => {
 	};
 	const fil = users.filter((i) => i === email);
 	if (fil.length === 1) {
-		console.log('el mail existe en la bd:', fil);
+		//console.log('el mail existe en la bd:', fil);
 	} else {
 		addDoc(colleccionUsers, user)
 			.then(({ id }) => {
@@ -115,8 +121,13 @@ export const getNames = async (email) => {
 	const usersData = users.map((user) => ({ id: user.id, name: user.name, email: user.email, picture: user.picture, posts: user.posts }));
 	return usersData.filter((user) => user.email !== email);
 };
+export const getNamesProfile = async (email) => {
+	const users = await getUsersData();
+	const usersData = users.map((user) => ({ id: user.id, name: user.name, email: user.email, picture: user.picture, posts: user.posts }));
+	return usersData.filter((user) => user.email === email);
+};
 
-export const addPost = async (title, description, email) => {
+export const addPost = async (title, description, email, picture) => {
 	const id = await getId(email);
 	const unique_id = uuid();
 	//Saco la al usuario con los posts
@@ -124,14 +135,18 @@ export const addPost = async (title, description, email) => {
 	const usersCollection = doc(db, 'users', id);
 	const res = await getDoc(usersCollection);
 	const user = { ...res.data() };
+	const comments = [];
 	const post = {
 		title,
 		description,
 		date: Timestamp.fromDate(new Date()),
 		id: unique_id,
 		email,
+		comments,
+		picture,
 	};
 	//agrego el post nuevo
+
 	user.posts.push(post);
 
 	//actualizo ese documento
@@ -139,17 +154,56 @@ export const addPost = async (title, description, email) => {
 		.then(() => {})
 		.catch((e) => console.log('aaa', e));
 };
+export const addComment = async (idd, comment, emailPost, emailUser, picture) => {
+	const id = await getId(emailPost);
+	const unique_id = uuid();
+	//Saco la al usuario con los posts
 
-/* export const deleteDocument = (id) => {
-	console.log(id);
 	const db = getFirestore();
-	const docRef = doc(db, coleccion, id);
+	const usersCollection = doc(db, 'users', id);
+	const res = await getDoc(usersCollection);
+	const user = { ...res.data() };
+	const email = emailUser;
 
-	deleteDoc(docRef)
+	const Newcomment = {
+		comment,
+		date: Timestamp.fromDate(new Date()),
+		id: unique_id,
+		email,
+		picture,
+	};
+	//agrego el comentario nuevo
+
+	user.posts.filter((post) => post.id === idd)[0].comments.push(Newcomment);
+	//actualizo ese documento
+	await updateDoc(usersCollection, user)
+		.then(() => {})
+		.catch((e) => console.log('aaa', e));
+};
+
+export const deleteComment = async (idUserPost, idComment, email) => {
+	const db = getFirestore();
+	//saco el id del usuario
+	const idUser = await getId(email);
+
+	//agarro toda la data del usuario:
+	const usersCollection = doc(db, 'users', idUser);
+	const res = await getDoc(usersCollection);
+	const userData = { ...res.data() };
+
+	const index = userData.posts
+		.filter((post) => post.id === idUserPost)
+		.reduce((acc, cur, i) => (acc = cur), {})
+		.comments.findIndex((comment) => comment.id === idComment);
+
+	userData.posts
+		.filter((post) => post.id === idUserPost)
+		.reduce((acc, cur, i) => (acc = cur), {})
+		.comments.splice(index, 1);
+
+	await updateDoc(usersCollection, userData)
 		.then(() => {
-			console.log('Entire Document has been deleted successfully.');
+			console.log('salio bien');
 		})
-		.catch((error) => {
-			console.log(error);
-		});
-}; */
+		.catch((e) => console.log('Error:', e));
+};

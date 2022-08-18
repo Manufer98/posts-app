@@ -55,7 +55,7 @@ const Navbar = () => {
 					<Badge
 						sx={{
 							'& .MuiBadge-badge': {
-								backgroundColor: '#fa6400',
+								backgroundColor: 'info',
 							},
 						}}
 						badgeContent={4}
@@ -66,7 +66,7 @@ const Navbar = () => {
 					<Badge
 						sx={{
 							'& .MuiBadge-badge': {
-								backgroundColor: '#fa6400',
+								backgroundColor: 'info',
 							},
 						}}
 						badgeContent={5}

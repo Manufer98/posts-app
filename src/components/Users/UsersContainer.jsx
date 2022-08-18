@@ -21,7 +21,6 @@ const UsersContainer = () => {
 		}
 	};
 
-	console.log(users);
 	return (
 		<Box sx={{ display: 'flex', gap: '10px', flexDirection: 'column' }} flex={4} p={2} marginBottom="10px">
 			<Typography variant="h3" textAlign="center">
