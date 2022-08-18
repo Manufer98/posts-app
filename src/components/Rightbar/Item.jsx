@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Item = ({ email, id }) => {
 	const nickName = email.split('@')[0];
 	return (
-		<Box sx={{ bgcolor: 'pink' }}>
+		<Box sx={{ bgcolor: '' }}>
 			<Link style={{}} to={'/user/' + id}>
 				{nickName}
 			</Link>

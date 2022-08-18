@@ -3,36 +3,40 @@ import Favorite from '@mui/icons-material/Favorite';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ShareIcon from '@mui/icons-material/Share';
-import { Avatar, Box, Card, CardActions, CardContent, CardHeader, IconButton, Typography } from '@mui/material';
+import { Avatar, Box, Button, Card, CardActions, CardContent, CardHeader, IconButton, Stack, TextField, Typography } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
-import React from 'react';
+import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { deletePost } from '../../firebase/FBPosts';
+import { addComment } from '../../firebase/FBPosts';
 
-const CardItemDetail = ({ id, title, description, date, email }) => {
+import Comments from '../Comments/Comments';
+
+const CardItemDetail = ({ comments, id, title, description, date, email, emailUser, picture }) => {
 	let navigate = useNavigate();
+	const [comment, setComment] = useState('');
 	const { user } = useAuth0();
 
-	const handleDelete = (id, email) => {
+	const handleComment = () => {
 		try {
-			deletePost(id, email);
-			navigate('/');
-			toast.success('Post deleted', { duration: 4000 });
+			if (comment.length === 0) {
+				toast.error('You must comment something');
+			} else {
+				console.log(comment);
+				addComment(id, comment, email, user.email, user.picture);
+				toast.success('Comment Posted');
+			}
 		} catch (e) {
-			console.log('aca', e, id);
+			console.log('Error:', e);
 		}
 	};
 
 	return (
 		<Box>
-			<Card>
+			<Typography variant="h3">Post</Typography>
+			<Card sx={{ marginBottom: '20px' }}>
 				<CardHeader
-					avatar={
-						<Avatar sx={{ bgcolor: 'red' }} aria-label="recipe">
-							R
-						</Avatar>
-					}
+					avatar={<Avatar src={picture} sx={{ bgcolor: 'red' }} aria-label="recipe"></Avatar>}
 					action={
 						<IconButton aria-label="settings">
 							<MoreVertIcon />
@@ -56,6 +60,20 @@ const CardItemDetail = ({ id, title, description, date, email }) => {
 					</IconButton>
 				</CardActions>
 			</Card>
+			<Typography variant="h6">Comments</Typography>
+			<Stack gap="10px">
+				{comments &&
+					comments.map((comment) => (
+						<Comments key={comment.id} picture={comment.picture} emailUser={emailUser} idUser={id} id={comment.id} date={comment.date} comment={comment.comment} email={comment.email} />
+					))}
+			</Stack>
+			<Typography marginTop="10px" marginBottom="10px" variant="h6">
+				Post your comment
+			</Typography>
+			<Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 2, py: 1, bgcolor: 'white', borderRadius: '2px' }}>
+				<TextField variant="outlined" size="small" sx={{ bgcolor: 'white', width: '90%' }} onChange={(e) => setComment(e.target.value)}></TextField>
+				<Button onClick={() => handleComment()}>Comment</Button>
+			</Stack>
 		</Box>
 	);
 };

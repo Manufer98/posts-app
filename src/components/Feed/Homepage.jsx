@@ -1,7 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { Box, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { addUser, getAllPosts } from '../../firebase/FBPosts';
 import HomepageItem from './HomepageItem';
 const Homepage = () => {
@@ -9,7 +8,7 @@ const Homepage = () => {
 	const { user } = useAuth0();
 	const [load, setLoad] = useState(true);
 	const [error, setError] = useState(false);
-	let navigate = useNavigate();
+
 	addUser();
 	useEffect(() => {
 		getData();
@@ -27,7 +26,7 @@ const Homepage = () => {
 		}
 	};
 
-	//console.log(users);
+	/* console.log(posts); */
 	return (
 		<Box
 			bgcolor=""

@@ -9,16 +9,16 @@ import React from 'react';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { deletePost } from '../../firebase/FBPosts';
-const Item = ({ id, title, description, date, email }) => {
+const Item = ({ id, title, description, date, email, picture }) => {
 	const { user } = useAuth0();
 	const initial = title.split('')[0].toUpperCase();
 
 	return (
 		<>
-			<Card>
+			<Card /* sx={{ width: '50%' }} */>
 				<CardHeader
 					avatar={
-						<Avatar sx={{ bgcolor: 'red' }} aria-label="recipe">
+						<Avatar src={picture} sx={{ bgcolor: 'red' }} aria-label="recipe">
 							{initial}
 						</Avatar>
 					}
@@ -30,6 +30,7 @@ const Item = ({ id, title, description, date, email }) => {
 					title={title}
 					subheader={date && date.toDate().toDateString()}
 				/>
+
 				{/* {<CardMedia component="img" height="600" image="https://i.pinimg.com/736x/d1/15/de/d115dec75f9cf5435339547a09a56b24.jpg" alt="Paella dish" />} */}
 				<CardContent>
 					<Typography variant="body2" color="text.secondary">
