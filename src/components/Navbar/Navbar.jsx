@@ -1,22 +1,18 @@
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import SignpostIcon from '@mui/icons-material/Signpost';
-import { AppBar, Avatar, Badge, Box, InputBase, Menu, MenuItem, styled, Toolbar, Typography } from '@mui/material';
-import { useState } from 'react';
+import { AppBar, Avatar, Badge, Box, Menu, MenuItem, styled, Toolbar, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { getSearchPosts } from '../../firebase/FBPosts';
 import { LogoutButton } from '../Login/Logout';
+import SearchBar from './SearchBar';
 const StyledToolbar = styled(Toolbar)({
 	display: 'flex',
 	justifyContent: 'space-between',
 	backgroundColor: '#e64588',
 });
-const Search = styled('div')(({ theme }) => ({
-	backgroundColor: 'white',
-	padding: '0 10px',
-	borderRadius: theme.shape.borderRadius,
-	width: '50%',
-}));
 
 const Icons = styled(Box)(({ theme }) => ({
 	display: 'none',
@@ -37,8 +33,22 @@ const UserBox = styled(Box)(({ theme }) => ({
 }));
 
 const Navbar = () => {
+	const [posts, setPosts] = useState([]);
 	const name = useSelector((state) => state.user.name);
 	const [open, setOpen] = useState(false);
+	useEffect(() => {
+		getData();
+	}, []);
+
+	const getData = async () => {
+		try {
+			const posts = await getSearchPosts();
+			setPosts(posts);
+		} catch (e) {
+			console.log('error', e);
+		}
+	};
+
 	return (
 		<AppBar position="sticky">
 			<StyledToolbar>
@@ -47,10 +57,10 @@ const Navbar = () => {
 				</Typography>
 
 				<SignpostIcon sx={{ display: { xs: 'block', sm: 'none' } }} />
-				<Search>
-					
-					<InputBase placeholder="search..." />
-				</Search>
+
+				<Box sx={{ marginRight: { xs: '0px', sm: '0px', md: '50px', xl: '240px' } }}>
+					<SearchBar data={posts} />
+				</Box>
 
 				<Icons>
 					<Badge

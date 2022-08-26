@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { Box, Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { addUser, getAllPosts } from '../../firebase/FBPosts';
 import HomepageItem from './HomepageItem';
@@ -41,6 +41,7 @@ const Homepage = () => {
 			<Typography variant="h3" textAlign="center">
 				Feed
 			</Typography>
+			<Divider />
 
 			{error && <Typography sx={{ textAlign: 'center', fontSize: '40px', marginTop: '20px' }}>Error... Try again next time</Typography>}
 			<div className={load ? 'loading' : ''}></div>
