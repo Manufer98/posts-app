@@ -140,6 +140,21 @@ export const getAllPosts = async (email) => {
 	return filterPost;
 };
 
+export const getSearchPosts = async () => {
+	const db = getFirestore();
+	const colleccionProductos = collection(db, 'users');
+	const res = await getDocs(colleccionProductos);
+	const posts = res.docs.map((item) => [...item.data().posts]);
+	let resultPosts = [];
+	for (let i = 0; i < posts.length; i++) {
+		for (let j = 0; j < posts[i].length; j++) {
+			resultPosts.push(posts[i][j]);
+		}
+	}
+
+	return resultPosts;
+};
+
 export const getNames = async (email) => {
 	const users = await getUsersData();
 	const usersData = users.map((user) => ({ id: user.id, name: user.name, email: user.email, picture: user.picture, posts: user.posts }));
