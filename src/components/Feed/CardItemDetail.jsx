@@ -12,7 +12,7 @@ import { addComment } from '../../firebase/FBPosts';
 
 import Comments from '../Comments/Comments';
 
-const CardItemDetail = ({ comments, id, title, description, date, email, emailUser, picture }) => {
+const CardItemDetail = ({ comments, id, title, description, date, email, emailUser, picture, edited }) => {
 	let navigate = useNavigate();
 	const [comment, setComment] = useState('');
 	const { user } = useAuth0();
@@ -22,8 +22,8 @@ const CardItemDetail = ({ comments, id, title, description, date, email, emailUs
 			if (comment.length === 0) {
 				toast.error('You must comment something');
 			} else {
-				console.log(comment);
 				addComment(id, comment, email, user.email, user.picture);
+				setComment('');
 				toast.success('Comment Posted');
 			}
 		} catch (e) {
@@ -36,7 +36,7 @@ const CardItemDetail = ({ comments, id, title, description, date, email, emailUs
 			<Typography variant="h3">Post</Typography>
 			<Card sx={{ marginBottom: '20px' }}>
 				<CardHeader
-					avatar={<Avatar src={picture} sx={{ bgcolor: 'red' }} aria-label="recipe"></Avatar>}
+					avatar={<Avatar referrerPolicy="no-referrer" src={picture} sx={{ bgcolor: 'red' }} aria-label="recipe"></Avatar>}
 					action={
 						<IconButton aria-label="settings">
 							<MoreVertIcon />
@@ -64,14 +64,25 @@ const CardItemDetail = ({ comments, id, title, description, date, email, emailUs
 			<Stack gap="10px">
 				{comments &&
 					comments.map((comment) => (
-						<Comments key={comment.id} picture={comment.picture} emailUser={emailUser} idUser={id} id={comment.id} date={comment.date} comment={comment.comment} email={comment.email} />
+						<Comments
+							key={comment.id}
+							editt={false}
+							picture={comment.picture}
+							emailUser={emailUser}
+							idUser={id}
+							id={comment.id}
+							date={comment.date}
+							comment={comment.comment}
+							email={comment.email}
+							edited={comment.edited}
+						/>
 					))}
 			</Stack>
 			<Typography marginTop="10px" marginBottom="10px" variant="h6">
 				Post your comment
 			</Typography>
 			<Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 2, py: 1, bgcolor: 'white', borderRadius: '2px' }}>
-				<TextField variant="outlined" size="small" sx={{ bgcolor: 'white', width: '90%' }} onChange={(e) => setComment(e.target.value)}></TextField>
+				<TextField value={comment} variant="outlined" size="small" sx={{ bgcolor: 'white', width: '90%' }} onChange={(e) => setComment(e.target.value)}></TextField>
 				<Button onClick={() => handleComment()}>Comment</Button>
 			</Stack>
 		</Box>

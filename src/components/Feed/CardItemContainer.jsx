@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { Box, Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { getPosts } from '../../firebase/FBPosts';
 import CardItem from './CardItem';
@@ -16,15 +16,18 @@ const CardItemContainer = () => {
 		getData();
 	}, [posts]);
 
+	console.log(posts);
+
 	const getData = async () => {
 		try {
 			const posts = await getPosts(user.email);
-			setPosts(posts.posts);
+			setPosts(posts.posts /* .filter((post) => post.description.includes('das')) */);
 			setPicture(posts.picture);
 			setLoad(false);
 		} catch (e) {
 			setError(true);
 			setLoad(false);
+			console.log(e);
 		}
 	};
 
@@ -33,6 +36,7 @@ const CardItemContainer = () => {
 			<Typography variant="h3" textAlign="center">
 				My posts
 			</Typography>
+			<Divider />
 			{/* <StepConnector /> */}
 			{error && <Typography sx={{ textAlign: 'center', fontSize: '40px', marginTop: '20px' }}>Error... Try again next time</Typography>}
 			<div className={load ? 'loading' : ''}></div>

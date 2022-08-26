@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { Box, Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { getNamesProfile } from '../../firebase/FBPosts';
 import CardItem from '../Feed/CardItem';
@@ -27,10 +27,11 @@ const Profile = () => {
 				<Typography variant="h5">My Profile</Typography>
 				<div>{user.birthdate}</div>
 				<img referrerpolicy="no-referrer" src={user.picture} alt={user.name} />
-				<Typography variant="h5">{user.name}</Typography>
-				<Typography variant="h5">{user.email}</Typography>
+				<Typography variant="h6">{user.name}</Typography>
+				<Typography variant="h6">{user.email}</Typography>
 				<Typography variant="h5">My Posts</Typography>
-				<Box sx={{ display: 'flex', gap: '10px', flexDirection: 'row', flexWrap: 'wrap' }}>
+				<Divider />
+				<Box sx={{ display: 'flex', gap: '10px', flexDirection: 'column', flexWrap: 'wrap', marginTop: '10px' }}>
 					<CardItem posts={userProfile.posts} picture={userProfile.picture} />
 				</Box>
 			</Box>

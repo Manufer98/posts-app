@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Add from "./components/Feed/Add";
 import CardItemDetailContainer from "./components/Feed/CardItemDetailContainer";
+import Edit from './components/Feed/Edit';
 import Feed from "./components/Feed/Feed";
 import Homepage from './components/Feed/Homepage';
 import NotFound from './components/Feed/NotFound';
@@ -77,7 +78,7 @@ function App() {
         <Stack bgcolor='#f5edf1' minHeight="93.2vh" direction="row"  justifyContent="space-between">
           <Sidebar />
           <Routes>
-          {/*   <Route path="/users" element={<Users />} /> */}
+          
             <Route path="/user/:id" element={<UserDetail />} />
             <Route path="/myposts" element={<Feed />} />
             <Route path="/notfound" element={<NotFound />} /> 
@@ -86,6 +87,7 @@ function App() {
             <Route path="/settings" element={<Settings />} />
             <Route path="/profile" element={<Profile/>} />
             <Route path="/post/:id" element={<CardItemDetailContainer/>} />
+            <Route path="/edit/:id" element={<Edit/>} />
           </Routes>
           <Rightbar />
         </Stack>
