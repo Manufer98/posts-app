@@ -49,6 +49,30 @@ export const deletePost = async (id, email) => {
 		})
 		.catch((e) => console.log('Error:', e));
 };
+export const editPost = async (id, email, newDescription) => {
+	const db = getFirestore();
+	//saco el id del usuario
+	const idUser = await getId(email);
+
+	//agarro toda la data del usuario:
+	const usersCollection = doc(db, 'users', idUser);
+	const res = await getDoc(usersCollection);
+	const userData = { ...res.data() };
+
+	//borro el post seleccionado
+	//const index = userData.posts.findIndex((item) => item.id === id);
+	userData.posts.filter((item) => item.id === id).reduce((acc, cur, i) => (acc = cur), {}).description = newDescription;
+	userData.posts.filter((item) => item.id === id).reduce((acc, cur, i) => (acc = cur), {}).edited = true;
+	console.log(userData.posts.filter((item) => item.id === id).reduce((acc, cur, i) => (acc = cur), {}).edited);
+	//userData.posts.splice(index, 1);
+
+	//actualizo la bd
+	await updateDoc(usersCollection, userData)
+		.then(() => {
+			console.log('se edito bien');
+		})
+		.catch((e) => console.log('Error:', e));
+};
 
 export const addUser = async () => {
 	const { name, email, picture } = GetUser();
@@ -136,6 +160,7 @@ export const addPost = async (title, description, email, picture) => {
 	const res = await getDoc(usersCollection);
 	const user = { ...res.data() };
 	const comments = [];
+	const edited = false;
 	const post = {
 		title,
 		description,
@@ -144,6 +169,7 @@ export const addPost = async (title, description, email, picture) => {
 		email,
 		comments,
 		picture,
+		edited,
 	};
 	//agrego el post nuevo
 
@@ -164,6 +190,7 @@ export const addComment = async (idd, comment, emailPost, emailUser, picture) =>
 	const res = await getDoc(usersCollection);
 	const user = { ...res.data() };
 	const email = emailUser;
+	const edited = false;
 
 	const Newcomment = {
 		comment,
@@ -171,6 +198,7 @@ export const addComment = async (idd, comment, emailPost, emailUser, picture) =>
 		id: unique_id,
 		email,
 		picture,
+		edited,
 	};
 	//agrego el comentario nuevo
 
@@ -200,6 +228,35 @@ export const deleteComment = async (idUserPost, idComment, email) => {
 		.filter((post) => post.id === idUserPost)
 		.reduce((acc, cur, i) => (acc = cur), {})
 		.comments.splice(index, 1);
+
+	await updateDoc(usersCollection, userData)
+		.then(() => {
+			console.log('salio bien');
+		})
+		.catch((e) => console.log('Error:', e));
+};
+
+export const editComment = async (idUserPost, idComment, email, Newcomment) => {
+	const db = getFirestore();
+	//saco el id del usuario
+	const idUser = await getId(email);
+
+	//agarro toda la data del usuario:
+	const usersCollection = doc(db, 'users', idUser);
+	const res = await getDoc(usersCollection);
+	const userData = { ...res.data() };
+
+	userData.posts
+		.filter((post) => post.id === idUserPost)
+		.reduce((acc, cur, i) => (acc = cur), {})
+		.comments.filter((comment) => comment.id === idComment)
+		.reduce((acc, cur, i) => (acc = cur), {}).comment = Newcomment;
+
+	userData.posts
+		.filter((post) => post.id === idUserPost)
+		.reduce((acc, cur, i) => (acc = cur), {})
+		.comments.filter((comment) => comment.id === idComment)
+		.reduce((acc, cur, i) => (acc = cur), {}).edited = true;
 
 	await updateDoc(usersCollection, userData)
 		.then(() => {

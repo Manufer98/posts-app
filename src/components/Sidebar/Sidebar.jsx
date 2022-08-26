@@ -22,7 +22,7 @@ const Sidebar = () => {
 					<Item title="Users" icon={<PersonIcon />} to="users" />
 					<Item title="Settings" icon={<SettingsIcon />} to="notfound" />
 					<Item title="Profile" icon={<AccountBoxIcon />} to="profile" />
-					<Item title={name} to="notfound" />
+					{/* <Item title={name} to="notfound" /> */}
 					<ListItem disablePadding>
 						<ListItemButton component="a" href="#home">
 							<ListItemIcon>

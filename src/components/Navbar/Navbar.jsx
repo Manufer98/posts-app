@@ -48,6 +48,7 @@ const Navbar = () => {
 
 				<SignpostIcon sx={{ display: { xs: 'block', sm: 'none' } }} />
 				<Search>
+					
 					<InputBase placeholder="search..." />
 				</Search>
 

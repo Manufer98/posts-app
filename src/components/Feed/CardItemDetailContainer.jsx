@@ -40,6 +40,7 @@ const CardItemDetailContainer = () => {
 					email={post.email}
 					comments={post.comments}
 					picture={post.picture}
+					edited={post.edited}
 				/>
 			) : (
 				''

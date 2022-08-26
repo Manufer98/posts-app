@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getUserData } from '../../firebase/FBPosts';
@@ -27,11 +27,15 @@ const Users = () => {
 				<Typography textAlign="center" variant="h5">
 					User {user.name} Profile
 				</Typography>
+
 				<Typography textAlign="center" variant="h6">
 					{user.email}
 				</Typography>
 				<img referrerPolicy="no-referrer" src={user.picture} alt="Imagen usuario" />
-				<Box sx={{ display: 'flex', gap: '10px', flexDirection: 'column' }}>
+
+				<Typography variant="h6">Posts</Typography>
+				<Divider />
+				<Box sx={{ display: 'flex', gap: '10px', flexDirection: 'column', marginTop: '10px' }}>
 					<CardItem posts={user.posts} picture={user.picture} />
 				</Box>
 			</Box>
