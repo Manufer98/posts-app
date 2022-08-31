@@ -45,7 +45,7 @@ initializeApp(firebaseConfig);
 
 
 function App() {
-  const {isAuthenticated,isLoading} = useAuth0();
+  const {isAuthenticated,isLoading,user} = useAuth0();
   const dispatch = useDispatch();
   const name=GetName(); 
   const email= GetEmail();
@@ -72,7 +72,7 @@ function App() {
     isAuthenticated ? 
     <Box >
       <BrowserRouter>
-        <Navbar />
+        <Navbar email={email} />
        
         <Toaster />
         <Stack bgcolor='#f5edf1' minHeight="93.2vh" direction="row"  justifyContent="space-between">

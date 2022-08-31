@@ -21,7 +21,7 @@ const CardItemContainer = () => {
 	const getData = async () => {
 		try {
 			const posts = await getPosts(user.email);
-			setPosts(posts.posts /* .filter((post) => post.description.includes('das')) */);
+			setPosts(posts.posts);
 			setPicture(posts.picture);
 			setLoad(false);
 		} catch (e) {

@@ -17,6 +17,19 @@ export const getPosts = async (email) => {
 	return ps;
 };
 
+export const getNotifications = async (email) => {
+	const id = await getId(email);
+	const db = getFirestore();
+	const usersCollection = doc(db, 'users', id);
+	const res = await getDoc(usersCollection);
+
+	const { notifications } = { ...res.data() };
+	const { picture } = { ...res.data() };
+
+	const ns = { notifications, picture };
+	return ns;
+};
+
 export const getPost = async (idd, email) => {
 	const id = await getId(email);
 	//Saco la al usuario con los posts
@@ -81,11 +94,13 @@ export const addUser = async () => {
 	const res = await getDocs(colleccionUsers);
 	const users = res.docs.map((user) => ({ ...user.data() }.email));
 	const posts = [];
+	const notifications = [];
 	const user = {
 		name,
 		email,
 		picture,
 		posts,
+		notifications,
 	};
 	const fil = users.filter((i) => i === email);
 	if (fil.length === 1) {
@@ -215,9 +230,23 @@ export const addComment = async (idd, comment, emailPost, emailUser, picture) =>
 		picture,
 		edited,
 	};
-	//agrego el comentario nuevo
 
-	user.posts.filter((post) => post.id === idd)[0].comments.push(Newcomment);
+	const newNotification = {
+		date: Timestamp.fromDate(new Date()),
+		emailPost,
+		emailUser,
+		idNotification: unique_id,
+		idPost: idd,
+		picture,
+	};
+
+	//agrego el comentario nuevo
+	user.notifications.push(newNotification);
+
+	user.posts
+		.filter((post) => post.id === idd)
+		.reduce((acc, cur, i) => (acc = cur), {})
+		.comments.push(Newcomment);
 	//actualizo ese documento
 	await updateDoc(usersCollection, user)
 		.then(() => {})

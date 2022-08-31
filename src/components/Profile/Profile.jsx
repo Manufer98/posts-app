@@ -8,9 +8,14 @@ const Profile = () => {
 	const { user, isAuthenticated } = useAuth0();
 	const [load, setLoad] = useState(true);
 	const [userProfile, setUserProfile] = useState([]);
-	useEffect(() => {
-		getData();
-	}, [userProfile]);
+	useEffect(
+		() => {
+			getData();
+		},
+		[
+			/* userProfile */
+		]
+	);
 	const getData = async () => {
 		try {
 			const userData = await getNamesProfile(user.email);
