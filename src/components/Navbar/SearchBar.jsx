@@ -20,7 +20,7 @@ const SearchBar = ({ data }) => {
 			<div className="searchInputs">
 				<Input
 					disableUnderline
-					sx={{ width: { xs: '264px', md: '330px', lg: '350px' } }}
+					sx={{ width: { xs: '200px', md: '330px', lg: '350px' } }}
 					onFocus={() => setSearchWord('')}
 					type="text"
 					placeholder="search..."
@@ -40,7 +40,10 @@ const SearchBar = ({ data }) => {
 				)}
 			</div>
 			{filterData.length > 0 && searchWord.length > 0 && (
-				<Box className="dataResult" sx={{ bgcolor: 'white ', width: { xs: '293px', md: '359px', lg: '379px' }, position: 'fixed', top: { xs: 51, sm: 55 }, left: 'calc(32%)-1px' }}>
+				<Box
+					className="dataResult"
+					sx={{ bgcolor: 'white ', width: { xs: '229px', md: '359px', lg: '379px' }, position: 'fixed', top: { xs: 51, sm: 55 }, left: 'calc(32%)-1px', maxHeight: '400px' }}
+				>
 					{filterData.slice(0, 15).map((post) => (
 						<Link onClick={() => setSearchWord('')} to={'/post/' + post.email + '~' + post.id} key={post.id} className="dataItem" style={{ color: 'black' }}>
 							<Avatar src={post.picture} sx={{ bgcolor: 'red' }} aria-label="recipe" referrerPolicy="no-referrer" variant="rounded">
