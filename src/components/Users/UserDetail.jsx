@@ -2,7 +2,7 @@ import { Box, Divider, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getUserData } from '../../firebase/FBPosts';
-import CardItem from '../Feed/CardItem';
+import CardItem from './CardItem';
 
 const Users = () => {
 	const [user, setUser] = useState({});

@@ -1,6 +1,7 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { Box, Divider, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { getNamesProfile } from '../../firebase/FBPosts';
 import CardItem from '../Feed/CardItem';
 
@@ -8,6 +9,9 @@ const Profile = () => {
 	const { user, isAuthenticated } = useAuth0();
 	const [load, setLoad] = useState(true);
 	const [userProfile, setUserProfile] = useState([]);
+	const postsRedux = useSelector((state) => state.myposts.posts);
+	const pictureRedux = useSelector((state) => state.myposts.picture);
+
 	useEffect(
 		() => {
 			getData();
@@ -37,7 +41,7 @@ const Profile = () => {
 				<Typography variant="h5">My Posts</Typography>
 				<Divider />
 				<Box sx={{ display: 'flex', gap: '10px', flexDirection: 'column', flexWrap: 'wrap', marginTop: '10px' }}>
-					<CardItem posts={userProfile.posts} picture={userProfile.picture} />
+					<CardItem postsRedux={postsRedux} pictureRedux={pictureRedux} />
 				</Box>
 			</Box>
 		)

@@ -44,14 +44,17 @@ const SearchBar = ({ data }) => {
 					className="dataResult"
 					sx={{ bgcolor: 'white ', width: { xs: '229px', md: '359px', lg: '379px' }, position: 'fixed', top: { xs: 51, sm: 55 }, left: 'calc(32%)-1px', maxHeight: '400px' }}
 				>
-					{filterData.slice(0, 15).map((post) => (
-						<Link onClick={() => setSearchWord('')} to={'/post/' + post.email + '~' + post.id} key={post.id} className="dataItem" style={{ color: 'black' }}>
-							<Avatar src={post.picture} sx={{ bgcolor: 'red' }} aria-label="recipe" referrerPolicy="no-referrer" variant="rounded">
-								{post.title.split('')[0].toUpperCase()}
-							</Avatar>
-							{post.description}
-						</Link>
-					))}
+					{filterData
+						.sort((a, b) => b.date - a.date)
+						.slice(0, 15)
+						.map((post) => (
+							<Link onClick={() => setSearchWord('')} to={'/post/' + post.email + '~' + post.id} key={post.id} className="dataItem" style={{ color: 'black' }}>
+								<Avatar src={post.picture} sx={{ bgcolor: 'red' }} aria-label="recipe" referrerPolicy="no-referrer" variant="rounded">
+									{post.title.split('')[0].toUpperCase()}
+								</Avatar>
+								{post.description}
+							</Link>
+						))}
 				</Box>
 			)}
 		</div>
