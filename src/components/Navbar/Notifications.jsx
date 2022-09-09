@@ -5,13 +5,15 @@ import { Avatar, Box, Divider, Typography } from '@mui/material';
 import TimeAgo from 'timeago-react';
 /* // English.
 import en from 'javascript-time-ago/locale/en'; */
+import { useAuth0 } from '@auth0/auth0-react';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 const Notifications = ({ data }) => {
+	const notifications = [...data];
 	const [open, setOpen] = useState(false);
-
+	const { user } = useAuth0();
 	const nowDate = new Date();
-	console.log('notifications', data);
+
 	return (
 		<Box>
 			<NotificationsNoneIcon sx={{ '&:hover': { cursor: 'pointer' } }} onClick={() => setOpen(!open)} />
@@ -33,9 +35,10 @@ const Notifications = ({ data }) => {
 						Notifications
 					</Typography>
 					<Box>
-						{data &&
-							data
+						{notifications &&
+							notifications
 								.sort((a, b) => b.date - a.date)
+								.filter((notification) => notification.emailUser !== user.email)
 								.map((notification) => (
 									<Link
 										to={'/post/' + notification.emailPost + '~' + notification.idPost}

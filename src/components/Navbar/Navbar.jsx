@@ -1,12 +1,12 @@
-import { useAuth0 } from '@auth0/auth0-react';
 import MailIcon from '@mui/icons-material/Mail';
 import SignpostIcon from '@mui/icons-material/Signpost';
 import { AppBar, Avatar, Badge, Box, Menu, MenuItem, styled, Toolbar, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getNotifications, getSearchPosts } from '../../firebase/FBPosts';
 import { LogoutButton } from '../Login/Logout';
+import { InitalNotifications, InitalPicture } from '../redux/notificationsSlice';
 import Notifications from './Notifications';
 import SearchBar from './SearchBar';
 const StyledToolbar = styled(Toolbar)({
@@ -33,23 +33,30 @@ const UserBox = styled(Box)(({ theme }) => ({
 	},
 }));
 
-const Navbar = ({ email }) => {
+const Navbar = () => {
 	const [posts, setPosts] = useState([]);
 	const [notifications, setNotifications] = useState([]);
 	const name = useSelector((state) => state.user.name);
 	const [open, setOpen] = useState(false);
-	const { user } = useAuth0();
+
+	const notificationsRedux = useSelector((state) => state.notifications.notifications);
+	const pictureRedux = useSelector((state) => state.notifications.picture);
+	const userEmail = useSelector((state) => state.user.email);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		getData();
-	}, [posts]);
+	}, [userEmail]);
 
 	const getData = async () => {
 		try {
 			const posts = await getSearchPosts();
 			setPosts(posts);
-			const notifications = await getNotifications(email);
-			setNotifications(notifications);
+
+			const notifications = await getNotifications(userEmail);
+
+			dispatch(InitalNotifications(notifications.notifications));
+			dispatch(InitalPicture(notifications.picture));
 		} catch (e) {
 			console.log('error', e);
 		}
@@ -91,12 +98,12 @@ const Navbar = ({ email }) => {
 						badgeContent={5}
 						color="primary"
 					>
-						<Notifications data={notifications.notifications} picture={notifications.picture} />
+						<Notifications data={notificationsRedux} picture={pictureRedux} />
 					</Badge>
-					<Avatar onClick={() => setOpen(true)} sx={{ width: 30, height: 30 }} />
+					<Avatar referrerPolicy="no-referrer" src={pictureRedux} onClick={() => setOpen(true)} sx={{ width: 30, height: 30 }} />
 				</Icons>
 				<UserBox onClick={() => setOpen(true)}>
-					<Avatar sx={{ width: 30, height: 30 }} />
+					<Avatar referrerPolicy="no-referrer" src={pictureRedux} sx={{ width: 30, height: 30 }} />
 					<Typography>{name}</Typography>
 				</UserBox>
 			</StyledToolbar>

@@ -7,14 +7,16 @@ import { Avatar, Button, Card, CardActions, CardContent, CardHeader, Divider, Ic
 import Checkbox from '@mui/material/Checkbox';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { deletePost } from '../../firebase/FBPosts';
+import { DeletePostsRedux } from '../redux/myPostsSlice';
 const Item = ({ id, title, description, date, email, picture, edited }) => {
 	const { user } = useAuth0();
 	const initial = title.split('')[0].toUpperCase();
 	const [open, setOpen] = useState(false);
 	const [descriptionn, setDescriptionn] = useState(description);
-
+	const dispatch = useDispatch();
 	const StyledModal = styled(Modal)({
 		display: 'flex',
 		alignItems: 'center',
@@ -24,6 +26,12 @@ const Item = ({ id, title, description, date, email, picture, edited }) => {
 	const AddPost = () => {};
 	const hanldeEdit = () => {
 		console.log('asd');
+	};
+
+	const handleDelete = async () => {
+		const a = await deletePost(id, user.email);
+		dispatch(DeletePostsRedux(a));
+		toast.success('Post deleted');
 	};
 
 	return (
@@ -61,14 +69,7 @@ const Item = ({ id, title, description, date, email, picture, edited }) => {
 
 					{title === user.email ? (
 						<>
-							<Button
-								onClick={() => {
-									deletePost(id, user.email);
-									toast.success('Post deleted');
-								}}
-							>
-								Delete
-							</Button>
+							<Button onClick={() => handleDelete()}>Delete</Button>
 							<Button>
 								<Link style={{ textDecoration: 'none' }} to={'/edit/' + email + '~' + id + '~' + descriptionn}>
 									Edit

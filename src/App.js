@@ -72,7 +72,7 @@ function App() {
     isAuthenticated ? 
     <Box >
       <BrowserRouter>
-        <Navbar email={email} />
+        <Navbar />
        
         <Toaster />
         <Stack bgcolor='#f5edf1' minHeight="93.2vh" direction="row"  justifyContent="space-between">

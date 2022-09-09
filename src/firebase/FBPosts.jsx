@@ -57,10 +57,10 @@ export const deletePost = async (id, email) => {
 
 	//actualizo la bd
 	await updateDoc(usersCollection, userData)
-		.then(() => {
-			console.log('salio bien');
-		})
+		.then(() => {})
 		.catch((e) => console.log('Error:', e));
+
+	return id;
 };
 export const editPost = async (id, email, newDescription) => {
 	const db = getFirestore();
@@ -76,7 +76,7 @@ export const editPost = async (id, email, newDescription) => {
 	//const index = userData.posts.findIndex((item) => item.id === id);
 	userData.posts.filter((item) => item.id === id).reduce((acc, cur, i) => (acc = cur), {}).description = newDescription;
 	userData.posts.filter((item) => item.id === id).reduce((acc, cur, i) => (acc = cur), {}).edited = true;
-	console.log(userData.posts.filter((item) => item.id === id).reduce((acc, cur, i) => (acc = cur), {}).edited);
+
 	//userData.posts.splice(index, 1);
 
 	//actualizo la bd
@@ -103,13 +103,12 @@ export const addUser = async () => {
 		notifications,
 	};
 	const fil = users.filter((i) => i === email);
-	if (fil.length === 1) {
+
+	if (fil.length > 0) {
 		//console.log('el mail existe en la bd:', fil);
 	} else {
 		addDoc(colleccionUsers, user)
-			.then(({ id }) => {
-				console.log(id);
-			})
+			.then(({ id }) => {})
 			.catch(() => console.log('aaa'));
 		console.log('add');
 	}
@@ -209,6 +208,8 @@ export const addPost = async (title, description, email, picture) => {
 	await updateDoc(usersCollection, user)
 		.then(() => {})
 		.catch((e) => console.log('aaa', e));
+
+	return post;
 };
 export const addComment = async (idd, comment, emailPost, emailUser, picture) => {
 	const id = await getId(emailPost);
@@ -303,8 +304,6 @@ export const editComment = async (idUserPost, idComment, email, Newcomment) => {
 		.reduce((acc, cur, i) => (acc = cur), {}).edited = true;
 
 	await updateDoc(usersCollection, userData)
-		.then(() => {
-			console.log('salio bien');
-		})
+		.then(() => {})
 		.catch((e) => console.log('Error:', e));
 };

@@ -1,19 +1,22 @@
 import { Box, Button, Modal, TextField, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { editPost } from '../../firebase/FBPosts';
+import { EditPostsRedux } from '../redux/myPostsSlice';
 import CardItemContainer from './CardItemContainer';
-const Edit = (props) => {
+const Edit = () => {
 	const [open, setOpen] = useState(true);
 	const { id } = useParams();
 	const email = id.split('~')[0];
 	const idPost = id.split('~')[1];
 	const oldDescription = id.split('~')[2];
 	const [description, setDescription] = useState(oldDescription);
+	const dispatch = useDispatch();
 
 	let navigate = useNavigate();
-	console.log(description);
+	//console.log(description);
 
 	useEffect(() => {
 		setOpen(true);
@@ -55,6 +58,8 @@ const Edit = (props) => {
 						onClick={() => {
 							try {
 								editPost(idPost, email, description);
+								const asd = { idPost, description };
+								dispatch(EditPostsRedux(asd));
 								setOpen(false);
 								toast.success('Your post was succesfully edited');
 								navigate('/myposts');

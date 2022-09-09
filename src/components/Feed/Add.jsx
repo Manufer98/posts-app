@@ -3,8 +3,9 @@ import { Add as AddIcon } from '@mui/icons-material';
 import { Box, Button, Fab, Modal, styled, TextField, Tooltip, Typography } from '@mui/material';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
-
+import { useDispatch } from 'react-redux';
 import { addPost } from '../../firebase/FBPosts';
+import { AddPostRedux } from '../redux/myPostsSlice';
 
 const StyledModal = styled(Modal)({
 	display: 'flex',
@@ -16,11 +17,26 @@ const Add = () => {
 	const [open, setOpen] = useState(false);
 	const [description, setDescription] = useState('');
 	const { user } = useAuth0();
+	const dispatch = useDispatch();
 
-	const AddPost = () => {
-		addPost(user.name, description, user.email, user.picture);
-		setOpen(false);
-		toast.success('Post created');
+	const AddPost = async () => {
+		if (description.length === 0) {
+			toast.error('Write a description');
+		} else {
+			/* const post = {
+				name: user.name,
+				description,
+				email: user.email,
+				picture: user.picture,
+			};*/
+
+			const a = await addPost(user.name, description, user.email, user.picture);
+			dispatch(AddPostRedux(a));
+
+			setOpen(false);
+			toast.success('Post created');
+			/* window.location.reload(); */
+		}
 	};
 
 	return (
