@@ -56,15 +56,19 @@ const Edit = () => {
 							},
 						}}
 						onClick={() => {
-							try {
-								editPost(idPost, email, description);
-								const asd = { idPost, description };
-								dispatch(EditPostsRedux(asd));
-								setOpen(false);
-								toast.success('Your post was succesfully edited');
-								navigate('/myposts');
-							} catch (e) {
-								console.log('error', e);
+							if (description.length > 0) {
+								try {
+									editPost(idPost, email, description);
+									const asd = { idPost, description };
+									dispatch(EditPostsRedux(asd));
+									setOpen(false);
+									toast.success('Your post was succesfully edited');
+									navigate('/myposts');
+								} catch (e) {
+									console.log('error', e);
+								}
+							} else {
+								toast.error('Write a description');
 							}
 						}}
 					>

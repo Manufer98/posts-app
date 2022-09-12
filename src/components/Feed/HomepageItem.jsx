@@ -1,6 +1,7 @@
 import React from 'react';
 import Item from './Item';
-const HomepageItem = ({ posts }) => {
+const HomepageItem = ({ postsRedux }) => {
+	const posts = [...postsRedux];
 	return (
 		<>
 			{posts &&
