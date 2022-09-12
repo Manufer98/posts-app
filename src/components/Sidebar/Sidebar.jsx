@@ -18,7 +18,7 @@ const Sidebar = () => {
 					<Item title="Homepage" icon={<HomeIcon />} to="" />
 					<Item title="My Posts" icon={<TextSnippetIcon />} to="myposts" />
 					<Item title="Groups" icon={<GroupIcon />} to="notfound" />
-					<Item title="Marketplace" icon={<StoreIcon />} to="notfound" />
+					<Item title="Chat" icon={<StoreIcon />} to="chats" />
 					<Item title="Users" icon={<PersonIcon />} to="users" />
 					<Item title="Settings" icon={<SettingsIcon />} to="notfound" />
 					<Item title="Profile" icon={<AccountBoxIcon />} to="profile" />
