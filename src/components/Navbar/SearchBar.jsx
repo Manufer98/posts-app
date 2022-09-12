@@ -2,11 +2,15 @@ import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from '@mui/icons-material/Search';
 import { Avatar, Box, Input } from '@mui/material';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './SearchBar.css';
-const SearchBar = ({ data }) => {
+const SearchBar = ({ searchPostsRedux }) => {
+	const data = [...searchPostsRedux];
 	const [filterData, setFilterData] = useState([]);
 	const [searchWord, setSearchWord] = useState('');
+	const postsRedux = useSelector((state) => state.posts.posts);
+	console.log(postsRedux);
 
 	const handleFilter = (event) => {
 		setSearchWord(event.target.value);

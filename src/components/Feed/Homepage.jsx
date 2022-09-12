@@ -1,13 +1,16 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { Box, Divider, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { addUser, getAllPosts } from '../../firebase/FBPosts';
+import { InitalPosts } from '../redux/postSlice';
 import HomepageItem from './HomepageItem';
 const Homepage = () => {
-	const [posts, setPosts] = useState([]);
 	const { user } = useAuth0();
 	const [load, setLoad] = useState(true);
 	const [error, setError] = useState(false);
+	const postsRedux = useSelector((state) => state.posts.posts);
+	const dispatch = useDispatch();
 
 	addUser();
 	useEffect(() => {
@@ -17,7 +20,7 @@ const Homepage = () => {
 	const getData = async () => {
 		try {
 			const posts = await getAllPosts(user.email);
-			setPosts(posts);
+			dispatch(InitalPosts(posts));
 			setLoad(false);
 		} catch (e) {
 			console.log('error', e);
@@ -26,7 +29,6 @@ const Homepage = () => {
 		}
 	};
 
-	/* console.log(posts); */
 	return (
 		<Box
 			bgcolor=""
@@ -45,7 +47,7 @@ const Homepage = () => {
 
 			{error && <Typography sx={{ textAlign: 'center', fontSize: '40px', marginTop: '20px' }}>Error... Try again next time</Typography>}
 			<div className={load ? 'loading' : ''}></div>
-			{posts.length !== 0 || error || load ? <HomepageItem posts={posts} /> : <Typography sx={{ textAlign: 'center', fontSize: '30px' }}>No posts</Typography>}
+			{postsRedux.length !== 0 || error || load ? <HomepageItem postsRedux={postsRedux} /> : <Typography sx={{ textAlign: 'center', fontSize: '30px' }}>No posts</Typography>}
 		</Box>
 	);
 };

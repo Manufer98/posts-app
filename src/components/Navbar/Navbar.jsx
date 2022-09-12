@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { getNotifications, getSearchPosts } from '../../firebase/FBPosts';
 import { LogoutButton } from '../Login/Logout';
 import { InitalNotifications, InitalPicture } from '../redux/notificationsSlice';
+import { InitalSearchPosts } from '../redux/postSlice';
 import Notifications from './Notifications';
 import SearchBar from './SearchBar';
 const StyledToolbar = styled(Toolbar)({
@@ -34,11 +35,9 @@ const UserBox = styled(Box)(({ theme }) => ({
 }));
 
 const Navbar = () => {
-	const [posts, setPosts] = useState([]);
-	const [notifications, setNotifications] = useState([]);
 	const name = useSelector((state) => state.user.name);
 	const [open, setOpen] = useState(false);
-
+	const searchPostsRedux = useSelector((state) => state.posts.searchPosts);
 	const notificationsRedux = useSelector((state) => state.notifications.notifications);
 	const pictureRedux = useSelector((state) => state.notifications.picture);
 	const userEmail = useSelector((state) => state.user.email);
@@ -51,10 +50,8 @@ const Navbar = () => {
 	const getData = async () => {
 		try {
 			const posts = await getSearchPosts();
-			setPosts(posts);
-
+			dispatch(InitalSearchPosts(posts));
 			const notifications = await getNotifications(userEmail);
-
 			dispatch(InitalNotifications(notifications.notifications));
 			dispatch(InitalPicture(notifications.picture));
 		} catch (e) {
@@ -72,7 +69,7 @@ const Navbar = () => {
 				<SignpostIcon sx={{ display: { xs: 'block', sm: 'none' } }} />
 
 				<Box sx={{ marginRight: { xs: '0px', sm: '0px', md: '50px', xl: '240px' } }}>
-					<SearchBar data={posts} />
+					<SearchBar searchPostsRedux={searchPostsRedux} />
 				</Box>
 
 				<Icons>
