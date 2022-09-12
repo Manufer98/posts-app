@@ -5,6 +5,8 @@ import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Chat from './components/Chat/Chat';
+import Users from './components/Chat/Users';
 import Add from "./components/Feed/Add";
 import CardItemDetailContainer from "./components/Feed/CardItemDetailContainer";
 import Edit from './components/Feed/Edit';
@@ -84,6 +86,8 @@ function App() {
             <Route path="/notfound" element={<NotFound />} /> 
             <Route path="/" element={<Homepage />} />
             <Route path="/users" element={<UsersContainer />} />
+            <Route path="/chats" element={<Users />} />
+            <Route path="/chat/:id" element={<Chat />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/profile" element={<Profile/>} />
             <Route path="/post/:id" element={<CardItemDetailContainer/>} />
